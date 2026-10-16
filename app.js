@@ -46,7 +46,7 @@ const questionBank = [
     { level: 1, category: 'words', type: 'open', question: 'Vertaal naar het Duits: "De dag"', answer: ['der tag', 'tag'], explanation: 'De dag = der Tag.' },
 
     // LEVEL 2: Regelm. werkwoorden, pers. voornaamwoorden & basis lidwoorden
-    { level: 2, category: 'grammar', type: 'mc', question: 'Welke uitgang krijgt "ihr" bij regelmatige werkwoorden?', options: ['-t', '-st', '-en', '-e'], correct: 0, explanation: 'Bij "ihr" krijgt de stam de uitgang -t (ihr spielt).' },
+    { level: 2, category: 'grammar', type: 'mc', question: 'Welke uitgang krijgt "ihr" bij regelmatige werkwoorden?', options: ['-t', '-st', '-en', '-e'], correct: 0, explanation: 'Bij "ihr" krijgt de stam de uitgang -t (ihr speelt).' },
     { level: 2, category: 'grammar', type: 'open', question: 'Vul in: "Ich ___ (wohnen) in Berlin."', answer: ['wohne'], explanation: 'Bij "ich" is de uitgang altijd -e (wohne).' },
     { level: 2, category: 'words', type: 'mc', question: 'Wat is de Duitse vertaling van "het station"?', options: ['der Bahnhof', 'die Station', 'der Flugsteig', 'das Gleis'], correct: 0, explanation: 'Het treinstation is "der Bahnhof".' },
     { level: 2, category: 'grammar', type: 'mc', question: 'Welk lidwoord hoort bij "Schule"?', options: ['die', 'der', 'das', 'dem'], correct: 0, explanation: 'Schule is vrouwelijk: die Schule.' },
@@ -141,11 +141,16 @@ let state = {
 const shopCatalog = {
     avatars: [
         { id: '🇩🇪', name: 'Duitse Vlag', price: 0, icon: '🇩🇪' },
+        { id: '⚡', name: 'Frau Eggel-Blitz ⚡', price: 75, icon: '⚡' },
+        { id: '🎩', name: 'Herr Van De Broek-Boss 🎩', price: 75, icon: '🎩' },
         { id: '👑', name: 'Koning Meister', price: 100, icon: '👑' },
         { id: '🦊', name: 'Slimme Vos', price: 150, icon: '🦊' },
         { id: '🚀', name: 'Grammatica Raket', price: 200, icon: '🚀' },
         { id: '🥨', name: 'Beierse Pretzel', price: 250, icon: '🥨' },
-        { id: '⚽', name: 'Bundesliga Bal', price: 300, icon: '⚽' }
+        { id: '⚽', name: 'Bundesliga Bal', price: 300, icon: '⚽' },
+        { id: '🌭', name: 'Wurst-König 🌭', price: 350, icon: '🌭' },
+        { id: '🧠', name: 'Einstein Deutsch 🧠', price: 400, icon: '🧠' },
+        { id: '🦸', name: 'Super-Schüler 🦸', price: 500, icon: '🦸' }
     ],
     hearts: [
         { id: 'heart_plus', name: '+1 Extra Leven Passief', price: 200, icon: '💖', type: 'heart' }
@@ -706,25 +711,4 @@ function finishGame(win) {
 
     const totalAsked = (state.currentLevel - 1) * 5 + state.currentQuestionIdx + (win ? 0 : 1);
     const scorePercent = totalAsked > 0 ? (state.correctAnswersCount / totalAsked) : 0;
-    const grade = (scorePercent * 9 + 1).toFixed(1);
-
-    const earnedCoins = state.correctAnswersCount * 10 + (win ? 200 : 0);
-
-    gradeDisplay.innerText = grade;
-    coinsEarnedDisplay.innerText = `+${earnedCoins}`;
-
-    if (win) {
-        iconContainer.innerText = '🏆';
-        title.innerText = 'Meister Obby Voltooid!';
-        subtitle.innerText = 'Fantastisch! Je hebt alle 10 niveaus van de Obby overleefd!';
-    } else {
-        iconContainer.innerText = '💀';
-        title.innerText = 'Game Over!';
-        subtitle.innerText = `Je bent gestrand in Level ${state.currentLevel}. Oefen nog eens en probeer opnieuw!`;
-    }
-}
-
-function quitGame() {
-    if (state.timer) clearInterval(state.timer);
-    showScreen('screen-welcome');
-}
+    const grade = (scorePercent * 9 +
